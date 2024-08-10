@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from app.domain.schemas.address_schema import AddressCreate
-from app.domain.models import AddressModel
+from app.domain.schemas.address_schema import AddressCreate, AddressUpdate
+from app.domain.models import Address, AddressModel
 
 
 def get_address(db: Session, address_id: int):
@@ -19,3 +19,15 @@ def create_address(db: Session, addressCreate: AddressCreate):
     db.commit()
     db.refresh(db_address)
     return db_address
+
+
+def update_address(db: Session, dto: AddressUpdate, address_to_update: Address):
+    address_to_update.update(dto)
+    db.commit()
+    db.refresh(address_to_update)
+    return address_to_update
+
+def delete_address(db: Session, address_to_delete:Address):
+    db.delete(address_to_delete)
+    db.commit()
+    

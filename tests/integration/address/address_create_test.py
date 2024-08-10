@@ -1,5 +1,5 @@
 from app.domain.models.address import AddressModel
-from .fixture import db
+from ..fixture import db
 
 
 def test_create_incomplete_address(db):

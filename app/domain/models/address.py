@@ -3,6 +3,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+from app.domain.schemas.address_schema import AddressUpdate
 from app.infrastructure.database import Base
 
 
@@ -20,6 +21,14 @@ class AddressModel(Base):
     country = Column(String)
     complement = Column(String, nullable=True)
     person_id = Column(Integer, ForeignKey("people.id"))
-    person_owner = relationship("PersonModel", back_populates="address", foreign_keys=[person_id])
+    person_owner = relationship(
+        "PersonModel", back_populates="address", foreign_keys=[person_id])
     company_id = Column(Integer, ForeignKey("companies.id"))
-    company_owner = relationship("CompanyModel", back_populates="address", foreign_keys=[company_id])
+    company_owner = relationship(
+        "CompanyModel", back_populates="address", foreign_keys=[company_id])
+
+    def update(self, dto: AddressUpdate):
+        for attr in vars(dto):
+            value = getattr(dto, attr)
+            if value is not None and hasattr(self, attr):
+                setattr(self, attr, value)
