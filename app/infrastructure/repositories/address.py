@@ -13,7 +13,7 @@ def get_addresses(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_address(db: Session, addressCreate: AddressCreate):
-    db_address = AddressModel(street=addressCreate.street, number=addressCreate.number, neighborhood=addressCreate.neighborhood,
+    db_address = AddressModel(street=addressCreate.street, number=addressCreate.number, neighborhood=addressCreate.neighborhood, complement=addressCreate.complement,
                               city=addressCreate.city, state=addressCreate.state, country=addressCreate.country, postal_code=addressCreate.postal_code)
     db.add(db_address)
     db.commit()

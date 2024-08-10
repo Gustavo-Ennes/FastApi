@@ -1,10 +1,10 @@
-from typing import TYPE_CHECKING
-from pydantic import BaseModel
+from typing import TYPE_CHECKING, Optional
+from pydantic import BaseModel, ConfigDict
 
 if TYPE_CHECKING:
-  from app.domain.schemas.address_schema import AddressSchema
-  from app.domain.schemas.company_schema import CompanySchema
-  from app.domain.schemas.tenant_schema import TenantSchema
+    from app.domain.schemas.address_schema import AddressSchema
+    from app.domain.schemas.company_schema import CompanySchema
+    from app.domain.schemas.tenant_schema import TenantSchema
 
 
 class PersonBase(BaseModel):
@@ -21,8 +21,7 @@ class PersonCreate(PersonBase):
 class PersonSchema(PersonCreate):
     id: int
     address: 'AddressSchema'
-    company: 'CompanySchema'
-    tenant: 'TenantSchema'
+    company: Optional['CompanySchema'] = None
+    tenant: Optional['TenantSchema'] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

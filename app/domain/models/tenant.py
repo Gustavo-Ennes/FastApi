@@ -8,15 +8,13 @@ from app.infrastructure.database import Base
 
 class TenantModel(Base):
     """tenant model"""
-    __tablename__ = "tenant"
+    __tablename__ = "tenants"
 
     id = Column(Integer, primary_key=True)
-    person_id = Column(Integer, ForeignKey("person.id"))
     person = relationship(
-        "PersonModel", back_populates="tenant", foreign_keys=[person_id])
-    company_id = Column(Integer, ForeignKey("company.id"))
+        "PersonModel", back_populates="tenant", uselist=False)
     company = relationship(
-        "CompanyModel", back_populates="tenant", foreign_keys=[company_id])
+        "CompanyModel", back_populates="tenant", uselist=False)
     is_active = Column(Boolean, default=True)
     annotations = Column(JSON, default=[])
     created = Column(DateTime, server_default=func.now())

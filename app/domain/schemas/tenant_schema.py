@@ -1,9 +1,9 @@
 from typing import List, Optional, TYPE_CHECKING
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 if TYPE_CHECKING:
-  from app.domain.schemas.company_schema import CompanySchema
-  from app.domain.schemas.person_schema import PersonSchema
+    from app.domain.schemas.company_schema import CompanySchema
+    from app.domain.schemas.person_schema import PersonSchema
 
 
 class TenantBase(BaseModel):
@@ -17,10 +17,9 @@ class TenantCreate(TenantBase):
 
 class TenantSchema(TenantCreate):
     id: int
-    person: 'PersonSchema'
-    company: 'CompanySchema'
+    person: Optional['PersonSchema'] = None
+    company: Optional['CompanySchema'] = None
     is_active: bool
     annotations: List[str] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

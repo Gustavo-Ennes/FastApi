@@ -8,10 +8,10 @@ from app.infrastructure.repositories.address import *
 router = APIRouter()
 
 
-@router.post("/address/", response_model=AddressCreate)
+@router.post("/address/", response_model=AddressSchema)
 def api_create_address(address: AddressCreate, db: Session = Depends(get_db)):
     db_address = create_address(db, addressCreate=address)
-    return create_address(db=db, addressCreate=db_address)
+    return db_address
 
 
 @router.get("/address/", response_model=list[AddressSchema])

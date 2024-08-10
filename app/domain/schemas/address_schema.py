@@ -1,5 +1,5 @@
-from typing import TYPE_CHECKING
-from pydantic import BaseModel, field_validator
+from typing import TYPE_CHECKING, Optional
+from pydantic import BaseModel, ConfigDict, field_validator
 
 from ..validations.address import number_validator, postal_code_validator
 
@@ -12,6 +12,7 @@ class AddressBase(BaseModel):
     street: str
     number: str
     neighborhood: str
+    complement: Optional[str] = None
     city: str
     state: str
     country: str
@@ -31,8 +32,7 @@ class AddressCreate(AddressBase):
 
 class AddressSchema(AddressBase):
     id: int
-    person_owner: 'PersonSchema'
-    company_owner: 'CompanySchema'
+    person_owner: Optional['PersonSchema'] = None
+    company_owner: Optional['CompanySchema'] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

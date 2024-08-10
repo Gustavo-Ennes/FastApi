@@ -10,7 +10,7 @@ def postal_code_validator(value: str):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Postal code must be exactly 8 digits long."
         )
-    return passed
+    return value
 
 
 def number_validator(value: str):
@@ -20,4 +20,4 @@ def number_validator(value: str):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Number must have only digits."
         )
-    return passed
+    return value
